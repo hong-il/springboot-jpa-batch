@@ -29,7 +29,7 @@ public class JobConfiguration {
     public Step HeroStep() {
         return stepBuilderFactory.get("HeroStep")
                 .tasklet((contribution, chunkContext) -> {
-                    log.info("|-->[Configuration] HeroStep()");
+                    log.info("|-->[Configuration] JobConfiguration.HeroStep()");
                     return RepeatStatus.FINISHED;
                 }).build();
     }
