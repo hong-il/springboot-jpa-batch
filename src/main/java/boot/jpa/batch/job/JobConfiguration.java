@@ -24,6 +24,7 @@ public class JobConfiguration {
     public Job HeroJob() {
         return jobBuilderFactory.get("HeroJob")
                 .start(HeroFirstStep(null))
+                .next(HeroSecondStep(null))
                 .build();
     }
 
@@ -40,6 +41,16 @@ public class JobConfiguration {
         return stepBuilderFactory.get("HeroFirstStep")
                 .tasklet((contribution, chunkContext) -> {
                     log.info("|-->[Configuration] JobConfiguration.HeroFirstStep(" + requestDate + ")");
+                    return RepeatStatus.FINISHED;
+                }).build();
+    }
+
+    @Bean
+    @JobScope
+    public Step HeroSecondStep(@Value("#{jobParameters[requestDate]}") String requestDate) {
+        return stepBuilderFactory.get("HeroSecondStep")
+                .tasklet((contribution, chunkContext) -> {
+                    log.info("|-->[Configuration] JobConfiguration.HeroSecondStep(" + requestDate + ")");
                     return RepeatStatus.FINISHED;
                 }).build();
     }
