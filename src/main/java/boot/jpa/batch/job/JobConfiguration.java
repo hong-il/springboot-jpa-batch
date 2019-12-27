@@ -5,8 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,15 +23,23 @@ public class JobConfiguration {
     @Bean
     public Job HeroJob() {
         return jobBuilderFactory.get("HeroJob")
-                .start(HeroStep())
+                .start(HeroFirstStep(null))
                 .build();
     }
 
+    /**jobParameters setting
+     * 1. shift + shift
+     * 2. Search Edit Configurations
+     * 3. BatchApplication
+     * 4. Environment
+     * 5. Program arguments : requestDate=20191227
+     * */
     @Bean
-    public Step HeroStep() {
-        return stepBuilderFactory.get("HeroStep")
+    @JobScope
+    public Step HeroFirstStep(@Value("#{jobParameters[requestDate]}") String requestDate) {
+        return stepBuilderFactory.get("HeroFirstStep")
                 .tasklet((contribution, chunkContext) -> {
-                    log.info("|-->[Configuration] JobConfiguration.HeroStep()");
+                    log.info("|-->[Configuration] JobConfiguration.HeroFirstStep(" + requestDate + ")");
                     return RepeatStatus.FINISHED;
                 }).build();
     }
