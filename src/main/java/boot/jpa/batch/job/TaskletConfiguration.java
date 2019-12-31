@@ -27,13 +27,13 @@ public class TaskletConfiguration {
      * 2. Search Edit Configurations
      * 3. BatchApplication
      * 4. Environment
-     * 5. Program arguments : --job.name=HeroStep requestDate=20191230
+     * 5. Program arguments : --job.name=TaskletStep requestDate=20191230
      * */
     @Bean
-    public Job HeroStep() {
-        return jobBuilderFactory.get("HeroStep")
-                .start(HeroFirstStepTasklet(null))
-                .next(HeroSecondStepTasklet())
+    public Job TaskletStep() {
+        return jobBuilderFactory.get("TaskletStep")
+                .start(TaskletFirstStep(null))
+                .next(TaskletSecondStep())
                 .build();
     }
 
@@ -48,18 +48,18 @@ public class TaskletConfiguration {
      * */
     @Bean
     @JobScope
-    public Step HeroFirstStepTasklet(@Value("#{jobParameters[requestDate]}") String requestDate) {
-        return stepBuilderFactory.get("HeroFirstStepTasklet")
+    public Step TaskletFirstStep(@Value("#{jobParameters[requestDate]}") String requestDate) {
+        return stepBuilderFactory.get("TaskletFirstStep")
                 .tasklet((contribution, chunkContext) -> {
-                    log.info("|-->[Configuration] StepConfiguration.HeroFirstStepTasklet(" + requestDate + ")");
+                    log.info("|-->[Configuration] TaskletConfiguration.TaskletFirstStep(" + requestDate + ")");
                     return RepeatStatus.FINISHED;
                 }).build();
     }
 
     @Bean
-    public Step HeroSecondStepTasklet() {
-        return stepBuilderFactory.get("HeroSecondStepTasklet")
-                .tasklet(HeroThirdStepTasklet(null))
+    public Step TaskletSecondStep() {
+        return stepBuilderFactory.get("TaskletSecondStep")
+                .tasklet(TaskletThirdStep(null))
                 .build();
     }
 
@@ -71,9 +71,9 @@ public class TaskletConfiguration {
      * */
     @Bean
     @StepScope
-    public Tasklet HeroThirdStepTasklet(@Value("#{jobParameters[requestDate]}") String requestDate) {
+    public Tasklet TaskletThirdStep(@Value("#{jobParameters[requestDate]}") String requestDate) {
         return (contribution, chunkContext) -> {
-            log.info("|-->[Configuration] StepConfiguration.HeroThirdStepTasklet(" + requestDate + ")");
+            log.info("|-->[Configuration] TaskletConfiguration.TaskletThirdStep(" + requestDate + ")");
             return RepeatStatus.FINISHED;
         };
     }
