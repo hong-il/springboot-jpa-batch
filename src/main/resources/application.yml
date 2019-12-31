@@ -1,4 +1,8 @@
 spring:
+  datasource:
+    data: classpath:data-h2.sql
   batch:
     job:
       names: ${job.name:NONE}
+
+logging.level.org.springframework.batch: DEBUG
