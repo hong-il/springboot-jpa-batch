@@ -1,0 +1,34 @@
+package boot.jpa.batch.domain;
+
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
+@ToString
+@Entity
+public class Hero2 {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private int age;
+
+    @CreatedDate
+    private LocalDateTime createdDate;
+
+    @Builder
+    public Hero2(Long id, String name, int age, LocalDateTime createdDate) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.createdDate = createdDate;
+    }
+}
