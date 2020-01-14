@@ -66,28 +66,28 @@ public class ProcessorNullJobConfiguration {
                 .name(BEAN_PREFIX+"reader")
                 .entityManagerFactory(emf)
                 .pageSize(chunkSize)
-                .queryString("SELECT t FROM Teacher t")
+                .queryString("SELECT h FROM Hero h")
                 .build();
     }
 
     @Bean
     public ItemProcessor<Hero, Hero> processor() {
-        return teacher -> {
+        return hero -> {
 
-            boolean isIgnoreTarget = teacher.getId() % 2 == 0L;
+            boolean isIgnoreTarget = hero.getId() % 2 == 0L;
             if(isIgnoreTarget){
-                log.info(">>>>>>>>> Teacher name={}, isIgnoreTarget={}", teacher.getName(), isIgnoreTarget);
+                log.info("Hero name={}, isIgnoreTarget={}", hero.getName(), isIgnoreTarget);
                 return null;
             }
 
-            return teacher;
+            return hero;
         };
     }
 
     private ItemWriter<Hero> writer() {
         return items -> {
             for (Hero item : items) {
-                log.info("Teacher Name={}", item.getName());
+                log.info("Hero Name={}", item.getName());
             }
         };
     }
