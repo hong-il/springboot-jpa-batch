@@ -1,4 +1,4 @@
-package boot.jpa.batch.job;
+package boot.jpa.batch.job.tasklet;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

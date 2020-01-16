@@ -1,4 +1,4 @@
-package boot.jpa.batch.job;
+package boot.jpa.batch.job.writer;
 
 import boot.jpa.batch.domain.Hero;
 import boot.jpa.batch.domain.Hero2;

@@ -1,4 +1,4 @@
-package boot.jpa.batch.job;
+package boot.jpa.batch.job.processor;
 
 import boot.jpa.batch.domain.Hero;
 import lombok.RequiredArgsConstructor;
